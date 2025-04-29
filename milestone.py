@@ -6,6 +6,7 @@
 # Name(s): Juhi Damley
 #
 
+import porter
 import string
 
 class TextModel:
@@ -129,7 +130,20 @@ class TextModel:
         return self.words
     
     def makeStems(self):
+        """
+        Creates the dictionary of word stems and their frequency
+        """
+        stemList = []
+        for word in self.cleanedtext.split():
+            stemList += [porter.create_stem(word)]
         
+        for word in stemList:
+            if word not in self.stems:
+                self.stems[word] = 1
+            else:
+                self.stems[word] += 1
+        return self.stems
+
 
 # And let's test things out here...
 TMintro = TextModel()
