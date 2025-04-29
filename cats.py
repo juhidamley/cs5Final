@@ -49,9 +49,10 @@ cat_words = [
     "Chartreux"
 ]
 
-cleanCatList = []
+
 
 def cleanCats():
+    cleanCatList = []
     for word in cat_words:
         word = word.lower()
         word = porter.create_stem(word)

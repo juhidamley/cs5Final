@@ -150,7 +150,7 @@ class TextModel:
         """
         Creates the dictionary of cat-related words
         """
-        catWordList = cats.cleanCatList()
+        catWordList = cats.cleanCats()
         
         for word in catWordList:
             for word2 in self.cleanedtext:
