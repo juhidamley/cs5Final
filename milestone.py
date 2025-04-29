@@ -8,6 +8,7 @@
 
 import porter
 import string
+import cats
 
 class TextModel:
     """A class supporting complex models of text."""
@@ -29,6 +30,7 @@ class TextModel:
         self.wordlengths = {}     # For counting word lengths
         self.stems = {}           # For counting stems
         self.sentencelengths = {} # For counting sentence lengths
+        self.catRefs = []         # For counting cat references
         
         # Create another dictionary of your own
         #
@@ -143,6 +145,24 @@ class TextModel:
             else:
                 self.stems[word] += 1
         return self.stems
+    
+    def makeCatRef(self):
+        """
+        Creates the dictionary of cat-related words
+        """
+        catWordList = cats.cleanCatList()
+        
+        for word in catWordList:
+            for word2 in self.cleanedtext:
+                if word in word2:
+                    if word not in self.catRefs:
+                        self.catRefs[word] = 1
+                    else:
+                        self.catRefs[word] += 1
+        return self.catRefs
+
+
+
 
 
 # And let's test things out here...
