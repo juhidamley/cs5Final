@@ -1,0 +1,3 @@
+Name: Juhi Damley
+
+Haruki Murakami is a popular Japanese writer whose works have been published into countless English editions, some with different translators. Given the linguistic distance between Japanese and English, I am curious to see if the computer could distinguish between the different translations. I plan on comparing the Jay Rubin and Alfred Birnbaum translations of the novel Hard Boiled Wonderland and the End of the World. 
