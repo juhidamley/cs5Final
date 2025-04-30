@@ -145,11 +145,12 @@ class TextModel:
             else:
                 self.stems[word] += 1
         return self.stems
-    
+
+"""
     def makeCatRef(self):
         """
-        Creates the dictionary of cat-related words
-        """
+        #Creates the dictionary of cat-related words
+"""
         catWordList = cats.cleanCats()
         
         for word in catWordList:
@@ -160,7 +161,7 @@ class TextModel:
                     else:
                         self.catRefs[word] += 1
         return self.catRefs
-
+"""   
 
 
 
