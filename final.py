@@ -172,13 +172,12 @@ class TextModel:
         """
         Finds the smallest value between nd1 and nd2
         """
-        for key in nd1:
-            for key2 in nd2:
-                if nd2[key2] > nd1[key]:
-                    sm_val = nd1[key]
-                else:
-                    sm_val = nd2[key2]
-        return sm_val
+        values1 = list(nd1.values()) if nd1 else []
+        values2 = list(nd2.values()) if nd2 else []
+        all_values = values1 + values2
+        if not all_values:
+            return 0.0
+        return min(all_values)
     
     def checkNorm(self, d):
         sumKey = 0
@@ -222,32 +221,33 @@ class TextModel:
         self.makeWordLengths()
         self.makeExclamation()
 
+
     def compareTextWithTwoModels(self, model1, model2):
+        """
+        Compares the text with two models
+        """
         nd1 = self.normalizeDictionary(model1.words)
         nd2 = self.normalizeDictionary(model2.words)
         LogProbs1 = self.compareDictionaries(self.words, nd1, nd2)
-        print("LogProbs1 is", LogProbs1)
 
         nd3 = self.normalizeDictionary(model1.stems)
         nd4 = self.normalizeDictionary(model2.stems)
         LogProbs2 = self.compareDictionaries(self.stems, nd3, nd4)
-        print("LogProbs2 is", LogProbs2)
 
         nd5 = self.normalizeDictionary(model1.sentencelengths)
         nd6 = self.normalizeDictionary(model2.sentencelengths)
         LogProbs3 = self.compareDictionaries(self.sentencelengths, nd5, nd6)
-        print("LogProbs3 is", LogProbs3)
 
         nd7 = self.normalizeDictionary(model1.exclamation)
         nd8 = self.normalizeDictionary(model2.exclamation)
         LogProbs4 = self.compareDictionaries(self.exclamation, nd7, nd8)
-        print("LogProbs4 is", LogProbs4)
 
         nd9 = self.normalizeDictionary(model1.wordlengths)
         nd10 = self.normalizeDictionary(model2.wordlengths)
         LogProbs5 = self.compareDictionaries(self.wordlengths, nd9, nd10)
-        print("LogProbs5 is", LogProbs5)
+
         d_name = ["words", "stems", "sentencelengths", "exclamation", "wordlengths"]
+        log_probs = [LogProbs1, LogProbs2, LogProbs3, LogProbs4, LogProbs5]
 
         print(f"     {'name':>20s}   {'vsTM1':>10s}   {'vsTM2':>10s} ")
         print(f"     {'----':>20s}   {'-----':>10s}   {'-----':>10s} ")
@@ -256,6 +256,30 @@ class TextModel:
         print(f"     {d_name[2]:>20s}   {LogProbs3[0]:>10.2f}   {LogProbs3[1]:>10.2f} ")
         print(f"     {d_name[3]:>20s}   {LogProbs4[0]:>10.2f}   {LogProbs4[1]:>10.2f} ")
         print(f"     {d_name[4]:>20s}   {LogProbs5[0]:>10.2f}   {LogProbs5[1]:>10.2f} ")
+
+        m1_wins = 0
+        m2_wins = 0
+
+        for lp in log_probs:
+            if lp[0] > lp[1]:
+                m1_wins += 1
+            else:
+                m2_wins +=1
+        
+        print(f"""-->  Model1 wins on {m1_wins} features
+              -->  Model2 wins on {m2_wins} features""")
+        
+        win = max(m1_wins,m2_wins)
+
+        if win == m1_wins:
+            winner = "Model1"
+        else:
+            winner = "Model2"
+
+        print(f"+++++      {winner} is the better match!      +++++")
+
+
+
 
 
 
