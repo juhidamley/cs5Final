@@ -30,7 +30,7 @@ class TextModel:
         self.wordlengths = {}     # For counting word lengths
         self.stems = {}           # For counting stems
         self.sentencelengths = {} # For counting sentence lengths
-        self.exclamation = {}     # For counting exclamatory words
+        self.punct = {}           # For counting punctuation 
         
         # Create another dictionary of your own
         #
@@ -146,17 +146,17 @@ class TextModel:
                 self.stems[word] += 1
         return self.stems
 
-    def makeExclamation(self):
+    def makePunctuation(self):
         """
-        Creates the dictionary of words with exclamations following them. 
+        Creates the dictionary of punctation frequency. 
         """
         for word in self.text.split():
-            if word[-1] == "!":
-                if word not in self.exclamation:
-                    self.exclamation[word] = 1
+            if word[-1] in ",.?';:\"-[]/()!":
+                if word[-1] not in self.punct:
+                    self.punct[word[-1]] = 1
                 else:
-                    self.exclamation[word] += 1   
-        return self.exclamation
+                    self.punct[word[-1]] += 1   
+        return self.punct
     
     def normalizeDictionary(self, d):
         '''
@@ -219,7 +219,7 @@ class TextModel:
         self.makeWords()
         self.makeStems()
         self.makeWordLengths()
-        self.makeExclamation()
+        self.makePunctuation()
 
 
     def compareTextWithTwoModels(self, model1, model2):
@@ -238,15 +238,15 @@ class TextModel:
         nd6 = self.normalizeDictionary(model2.sentencelengths)
         LogProbs3 = self.compareDictionaries(self.sentencelengths, nd5, nd6)
 
-        nd7 = self.normalizeDictionary(model1.exclamation)
-        nd8 = self.normalizeDictionary(model2.exclamation)
-        LogProbs4 = self.compareDictionaries(self.exclamation, nd7, nd8)
+        nd7 = self.normalizeDictionary(model1.punct)
+        nd8 = self.normalizeDictionary(model2.punct)
+        LogProbs4 = self.compareDictionaries(self.punct, nd7, nd8)
 
         nd9 = self.normalizeDictionary(model1.wordlengths)
         nd10 = self.normalizeDictionary(model2.wordlengths)
         LogProbs5 = self.compareDictionaries(self.wordlengths, nd9, nd10)
 
-        d_name = ["words", "stems", "sentencelengths", "exclamation", "wordlengths"]
+        d_name = ["words", "stems", "sentencelengths", "punct", "wordlengths"]
         log_probs = [LogProbs1, LogProbs2, LogProbs3, LogProbs4, LogProbs5]
 
         print(f"     {'name':>20s}   {'vsTM1':>10s}   {'vsTM2':>10s} ")
@@ -304,3 +304,28 @@ print("TMintro is", TMintro)
 
 
 # Add more calls - and more models - here:
+
+print(" +++++++++++ PGModel +++++++++++ ")
+PG = TextModel()
+PG.addFileText("PGtrain.txt")
+PG.createAllDictionaries()  # provided in hw description
+
+print(" +++++++++++ ABModel +++++++++++ ")
+AB = TextModel()
+AB.addFileText("ABtrain.txt")
+AB.createAllDictionaries()  # provided in hw description
+
+
+print(" +++++++++++ Unknown text PG +++++++++++ ")
+PG_Unk = TextModel()
+PG_Unk.addFileText("PGtest.txt")
+PG_Unk.createAllDictionaries()  # provided in hw description
+
+print(" +++++++++++ Unknown text AB +++++++++++ ")
+AB_Unk = TextModel()
+AB_Unk.addFileText("ABtest.txt")
+AB_Unk.createAllDictionaries()  # provided in hw description
+
+PG_Unk.compareTextWithTwoModels(PG, AB)
+
+AB_Unk.compareTextWithTwoModels(PG, AB)
