@@ -8,7 +8,6 @@
 
 import porter
 import string
-import cats
 
 class TextModel:
     """A class supporting complex models of text."""
@@ -30,7 +29,7 @@ class TextModel:
         self.wordlengths = {}     # For counting word lengths
         self.stems = {}           # For counting stems
         self.sentencelengths = {} # For counting sentence lengths
-        self.catRefs = []         # For counting cat references
+        self.exclamation = {}     # For counting cat references
         
         # Create another dictionary of your own
         #
@@ -146,22 +145,17 @@ class TextModel:
                 self.stems[word] += 1
         return self.stems
 
-"""
-    def makeCatRef(self):
+    def makeExclamation(self):
         """
-        #Creates the dictionary of cat-related words
-"""
-        catWordList = cats.cleanCats()
-        
-        for word in catWordList:
-            for word2 in self.cleanedtext:
-                if word in word2:
-                    if word not in self.catRefs:
-                        self.catRefs[word] = 1
-                    else:
-                        self.catRefs[word] += 1
-        return self.catRefs
-"""   
+        Creates the dictionary of words with exclamations following them. 
+        """
+        for word in self.text.split():
+            if word[-1] == "!":
+                if word not in self.exclamation:
+                    self.exclamation[word] = 1
+                else:
+                    self.exclamation[word] += 1   
+        return self.exclamation
 
 
 

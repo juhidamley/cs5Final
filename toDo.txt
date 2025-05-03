@@ -17,11 +17,11 @@ For the starting point, starter.py, you should submit a version in which you hav
 
 For the milestone, you should submit (on Gradescope) a version for which the following pieces are implemented and work:
 
-    makeWordLengths(self): should use the text in self.text to create the self.wordlengths dictionary.
+    X makeWordLengths(self): should use the text in self.text to create the self.wordlengths dictionary.
 
-    makeWords(self): should use the text in self.text to create the self.words dictionary.
+    X makeWords(self): should use the text in self.text to create the self.words dictionary.
 
-    makeStems(self): should use the text in self.text to create the self.stems dictionary.
+    X makeStems(self): should use the text in self.text to create the self.stems dictionary.
 
     makeMyParameter(s): should use the text in self.text to create the myparameter dictionary. This one is up to you (we used punctuation—feel free to use that or something else...!)
         This "other feature" isn't needed for the milestone, but it is needed for the final version. Note that you should choose a better name than myparameter!
