@@ -1,0 +1,32 @@
+I trained the two models on two different translations of the novel "Hard Boiled Wonderland and the End of the World" by Haruki Murakami, with translations by Phillip Gabriel and Alfred Birnbaum. For the test models, I used an excerpt from Gabriel's translation of the Novel "Kafka on the Shore" and Birnbaum's translation of the novel "All She Was Worth" in order to see if the stylistic differences of the translation of the same source material could be recognized in other works. A winner was declared by the number of total wins. 
+
+Given Japanese's lingusitic distance from English, I expected the authors to be correctly identified, as translators oftentimes have to restructure sentences, leading their personl writing styles to ingrate itself in the text. Unsurprisingly, the models guessed correctly both times, with results indicated as below. Surprisingly, however, Gabriel's translation was much more cohesively attributed to himself, with 5 wins, whereas Birnbaum's translation came very close to being mistaken for Gabriel's, with 3 wins. 
+
+
+ +++++++++++ Unknown text PG +++++++++++ 
+                     name        vsPG        vsAB 
+                     ----        -----        ----- 
+                    words     -4269.18     -4271.67 
+                    stems     -4102.44     -4107.61 
+          sentencelengths      -132.56      -137.38 
+                    punct       -73.12       -84.46 
+              wordlengths     -1277.00     -1277.90 
+
+-->  PG wins on 5 features
+-->  AB wins on 0 features
++++++      PG is the better match!      +++++
+
+ +++++++++++ Unknown text AB +++++++++++ 
+                     name        vsPG        vsAB 
+                     ----        -----        ----- 
+                    words     -5137.46     -5133.43 
+                    stems     -4941.99     -4932.45 
+          sentencelengths      -161.23      -165.43 
+                    punct      -291.64      -145.52 
+              wordlengths     -1487.07     -1488.72 
+
+-->  PG wins on 2 features
+-->  AB wins on 3 features
++++++      AB is the better match!      +++++
+
+* Text is slightly altered for clarity
